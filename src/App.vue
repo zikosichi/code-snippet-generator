@@ -18,35 +18,38 @@
             <hr>
 
           <v-expansion-panel v-model="panelIndex">
-            <v-expansion-panel-content v-for="(item,i) in 5"
+            <v-expansion-panel-content v-for="(snippet, i) in snippets"
               :key="i"
               :lazy="true">
 
               <template v-slot:header>
-                <div class="snippet-name">Item</div>
+                <div class="snippet-name">{{snippet.name}}</div>
               </template>
 
               <v-card class="grey lighten-4 px-4 py-3">
                 <div class="row">
                   <div class="col">
                     <v-text-field label="Prefix"
+                      v-model="snippet.prefix"
                       placeholder="m-snippet"
                       color="primary">
                     </v-text-field>
                   </div>
                   <div class="col">
                     <v-text-field label="Snippet Name"
+                      v-model="snippet.name"
                       placeholder="My Snippet">
                     </v-text-field>
                   </div>
                   <div class="col">
-                    <v-text-field label="Description">
+                    <v-text-field label="Description"
+                      v-model="snippet.description">
                     </v-text-field>
                   </div>
                 </div>
 
                 <div class="editor-wrapper">
-                  <codemirror v-model="code"
+                  <codemirror v-model="snippet.code"
                     v-if="visibleEditorIndex === i"
                     :options="cmOptions">
                   </codemirror>
@@ -68,11 +71,9 @@
 </template>
 
 <script>
-// language js
-import 'codemirror/mode/javascript/javascript.js'
 // theme css
 import 'codemirror/theme/neo.css'
-import HelloWorld from './components/HelloWorld.vue'
+import { mapState } from 'vuex'
 
 export default {
   name: 'app',
@@ -90,15 +91,22 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapState({
+      snippets: state => state.snippets,
+    })
+  },
   methods: {
     onCmReady: function(e) {
     }
   },
   watch: {
     panelIndex: function (newValue) {
+      // This is a fix for codemirror.
+      // It does not render in expandable box without re-render
       setTimeout(() => {
         this.visibleEditorIndex = newValue
-      });
+      }, 10);
     }
   }
 }
