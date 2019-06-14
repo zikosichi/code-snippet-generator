@@ -7,11 +7,9 @@
           <div class="mb-3 d-flex align-items-center">
             <h5 class="mr-auto mb-0 text-uppercase">Your snippets</h5>
             <div class="text-right">
-              <v-btn
-                color="blue-grey"
+              <v-btn color="blue-grey"
                 class="white--text"
-                @click="loader = 'loading3'"
-              >
+                @click="loader = 'loading3'">
                 <v-icon left dark>add</v-icon>
                 New
               </v-btn>
@@ -20,16 +18,33 @@
             <hr>
 
           <v-expansion-panel>
-            <v-expansion-panel-content
-              v-for="(item,i) in 5"
-              :key="i"
-            >
+            <v-expansion-panel-content v-for="(item,i) in 5"
+              :key="i">
+
               <template v-slot:header>
                 <div>Item</div>
               </template>
-              <v-card>
-                <v-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</v-card-text>
+
+              <v-card class="grey lighten-4 px-4 pt-3">
+                <div class="row">
+                  <div class="col">
+                    <v-text-field label="Prefix"
+                      placeholder="m-snippet"
+                      color="primary">
+                    </v-text-field>
+                  </div>
+                  <div class="col">
+                    <v-text-field label="Snippet Name"
+                      placeholder="My Snippet">
+                    </v-text-field>
+                  </div>
+                  <div class="col">
+                    <v-text-field label="Description">
+                    </v-text-field>
+                  </div>
+                </div>
               </v-card>
+
             </v-expansion-panel-content>
           </v-expansion-panel>
         </div>

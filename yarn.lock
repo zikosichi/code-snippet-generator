@@ -2072,6 +2072,11 @@ code-point-at@^1.0.0:
   resolved "https://registry.yarnpkg.com/code-point-at/-/code-point-at-1.1.0.tgz#0d070b4d043a5bea33a2f1a40e2edb3d9a4ccf77"
   integrity sha1-DQcLTQQ6W+ozovGkDi7bPZpMz3c=
 
+codemirror@^5.41.0:
+  version "5.47.0"
+  resolved "https://registry.yarnpkg.com/codemirror/-/codemirror-5.47.0.tgz#c13a521ae5660d3acc655af252f4955065293789"
+  integrity sha512-kV49Fr+NGFHFc/Imsx6g180hSlkGhuHxTSDDmDHOuyln0MQYFLixDY4+bFkBVeCEiepYfDimAF/e++9jPJk4QA==
+
 collection-visit@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/collection-visit/-/collection-visit-1.0.0.tgz#4bc0373c164bc3291b4d368c829cf1a80a59dca0"
@@ -2710,6 +2715,11 @@ detect-node@^2.0.4:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/detect-node/-/detect-node-2.0.4.tgz#014ee8f8f669c5c58023da64b8179c083a28c46c"
   integrity sha512-ZIzRpLJrOj7jjP2miAtgqIfmzbxa4ZOr5jJc601zklsfEx9oTzmmj2nVpIPRpNlRTIh8lc1kyViIY7BWSGNmKw==
+
+diff-match-patch@^1.0.0:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/diff-match-patch/-/diff-match-patch-1.0.4.tgz#6ac4b55237463761c4daf0dc603eb869124744b1"
+  integrity sha512-Uv3SW8bmH9nAtHKaKSanOQmj2DnlH65fUpcrMdfdaOxUG02QQ4YGZ8AE7kKOMisF7UqvOlGKVYWRvezdncW9lg==
 
 diffie-hellman@^5.0.0:
   version "5.0.3"
@@ -7819,6 +7829,14 @@ vm-browserify@^1.0.1:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-1.1.0.tgz#bd76d6a23323e2ca8ffa12028dc04559c75f9019"
   integrity sha512-iq+S7vZJE60yejDYM0ek6zg308+UZsdtPExWP9VZoCFCz1zkJoXFnAX7aZfd/ZwrkidzdUZL0C/ryW+JwAiIGw==
+
+vue-codemirror@^4.0.6:
+  version "4.0.6"
+  resolved "https://registry.yarnpkg.com/vue-codemirror/-/vue-codemirror-4.0.6.tgz#b786bb80d8d762a93aab8e46f79a81006f0437c4"
+  integrity sha512-ilU7Uf0mqBNSSV3KT7FNEeRIxH4s1fmpG4TfHlzvXn0QiQAbkXS9lLfwuZpaBVEnpP5CSE62iGJjoliTuA8poQ==
+  dependencies:
+    codemirror "^5.41.0"
+    diff-match-patch "^1.0.0"
 
 vue-eslint-parser@^2.0.3:
   version "2.0.3"
