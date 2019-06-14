@@ -7,7 +7,7 @@
           <div class="mb-3 d-flex align-items-center">
             <h5 class="mr-auto mb-0 text-uppercase">Your snippets</h5>
             <div class="text-right">
-              <v-btn color="blue-grey"
+              <v-btn color="blue"
                 class="white--text"
                 @click="loader = 'loading3'">
                 <v-icon left dark>add</v-icon>
@@ -19,13 +19,14 @@
 
           <v-expansion-panel>
             <v-expansion-panel-content v-for="(item,i) in 5"
-              :key="i">
+              :key="i"
+              lazy="true">
 
               <template v-slot:header>
-                <div>Item</div>
+                <div class="snippet-name">Item</div>
               </template>
 
-              <v-card class="grey lighten-4 px-4 pt-3">
+              <v-card class="grey lighten-4 px-4 py-3">
                 <div class="row">
                   <div class="col">
                     <v-text-field label="Prefix"
@@ -43,6 +44,11 @@
                     </v-text-field>
                   </div>
                 </div>
+
+                <no-ssr placeholder="Codemirror Loading...">
+                  <codemirror v-model="code" :options="cmOptions"></codemirror>
+                </no-ssr>
+
               </v-card>
 
             </v-expansion-panel-content>
@@ -55,14 +61,34 @@
       </div>
     </div>
 
+    <codemirror v-model="code" :options="cmOptions"></codemirror>
+
   </div>
 </template>
 
 <script>
+// language js
+import 'codemirror/mode/javascript/javascript.js'
+// theme css
+import 'codemirror/theme/neo.css'
 import HelloWorld from './components/HelloWorld.vue'
 
 export default {
-  name: 'app'
+  name: 'app',
+  data() {
+    return {
+      code: 'const a = 10',
+      cmOptions: {
+        // codemirror options
+        tabSize: 2,
+        mode: 'auto',
+        theme: 'neo',
+        lineNumbers: true,
+        line: true,
+        // more codemirror options, 更多 codemirror 的高级配置...
+      }
+    }
+  }
 }
 </script>
 
@@ -79,5 +105,21 @@ body, html {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   height: 100%;
+}
+
+.snippet-name {
+  font-size: 16px;
+}
+
+.v-expansion-panel {
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.CodeMirror {
+  font-family: Arial, monospace;
+  font-size: 16px;
+  border-radius: 5px;
+  overflow: hidden;
 }
 </style>
