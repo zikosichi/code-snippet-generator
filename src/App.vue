@@ -17,10 +17,10 @@
           </div>
             <hr>
 
-          <v-expansion-panel>
+          <v-expansion-panel v-model="panelIndex">
             <v-expansion-panel-content v-for="(item,i) in 5"
               :key="i"
-              lazy="true">
+              :lazy="true">
 
               <template v-slot:header>
                 <div class="snippet-name">Item</div>
@@ -45,9 +45,12 @@
                   </div>
                 </div>
 
-                <no-ssr placeholder="Codemirror Loading...">
-                  <codemirror v-model="code" :options="cmOptions"></codemirror>
-                </no-ssr>
+                <div class="editor-wrapper">
+                  <codemirror v-model="code"
+                    v-if="visibleEditorIndex === i"
+                    :options="cmOptions">
+                  </codemirror>
+                </div>
 
               </v-card>
 
@@ -60,8 +63,6 @@
         </div>
       </div>
     </div>
-
-    <codemirror v-model="code" :options="cmOptions"></codemirror>
 
   </div>
 </template>
@@ -78,15 +79,26 @@ export default {
   data() {
     return {
       code: 'const a = 10',
+      panelIndex: 0,
+      visibleEditorIndex: 0,
       cmOptions: {
-        // codemirror options
         tabSize: 2,
         mode: 'auto',
         theme: 'neo',
         lineNumbers: true,
         line: true,
-        // more codemirror options, 更多 codemirror 的高级配置...
       }
+    }
+  },
+  methods: {
+    onCmReady: function(e) {
+    }
+  },
+  watch: {
+    panelIndex: function (newValue) {
+      setTimeout(() => {
+        this.visibleEditorIndex = newValue
+      });
     }
   }
 }
@@ -105,6 +117,10 @@ body, html {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   height: 100%;
+}
+
+.editor-wrapper {
+  height: 300px;
 }
 
 .snippet-name {
