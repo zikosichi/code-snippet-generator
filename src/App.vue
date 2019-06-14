@@ -3,19 +3,20 @@
 
     <div class="h-100 bg-light row no-gutters">
       <div class="col col-6">
-        <div class="p-5">
+        <div class="px-5 py-3">
           <div class="mb-3 d-flex align-items-center">
             <h5 class="mr-auto mb-0 text-uppercase">Your snippets</h5>
             <div class="text-right">
               <v-btn color="blue"
                 class="white--text"
-                @click="loader = 'loading3'">
+                @click="addNewSnippet">
                 <v-icon left dark>add</v-icon>
                 New
               </v-btn>
             </div>
           </div>
-            <hr>
+
+          <hr>
 
           <v-expansion-panel v-model="panelIndex">
             <v-expansion-panel-content v-for="(snippet, i) in snippets"
@@ -24,6 +25,12 @@
 
               <template v-slot:header>
                 <div class="snippet-name">{{snippet.name}}</div>
+                <div class="text-right">
+                  <v-btn flat icon small color="grey darken-1"
+                   @click.stop="deleteSnippet(i)">
+                    <v-icon small>delete</v-icon>
+                  </v-btn>
+                </div>
               </template>
 
               <v-card class="grey lighten-4 px-4 py-3">
@@ -56,9 +63,13 @@
                 </div>
 
               </v-card>
-
             </v-expansion-panel-content>
           </v-expansion-panel>
+
+          <v-btn small block flat @click="addNewSnippet"
+            color="grey darken-1">
+            <v-icon small left dark>add</v-icon>
+          </v-btn>
         </div>
       </div>
       <div class="col col-6">
@@ -73,7 +84,6 @@
 <script>
 // theme css
 import 'codemirror/theme/neo.css'
-import { mapState } from 'vuex'
 
 export default {
   name: 'app',
@@ -88,16 +98,30 @@ export default {
         theme: 'neo',
         lineNumbers: true,
         line: true,
-      }
+      },
+      snippets: [
+        {
+          prefix: '',
+          name: 'My Snippet',
+          code: '',
+          description: '',
+        }
+      ]
     }
   },
-  computed: {
-    ...mapState({
-      snippets: state => state.snippets,
-    })
-  },
   methods: {
-    onCmReady: function(e) {
+    addNewSnippet: function() {
+      this.snippets.push({
+        prefix: '',
+        name: 'My Snippet',
+        code: '',
+        description: '',
+      })
+      this.panelIndex = this.snippets.length - 1
+    },
+    deleteSnippet: function (i) {
+      this.snippets.splice(i, 1)
+      this.panelIndex--
     }
   },
   watch: {
