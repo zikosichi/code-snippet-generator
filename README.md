@@ -1,5 +1,5 @@
 # snippet-generator
-This is a very simple and handy tool to generate code snippets for VS Code
+A very simple but handy tool to generate code snippets for VS Code
 
 ![Screenshot](screenshot.png)
 
