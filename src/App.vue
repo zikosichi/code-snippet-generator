@@ -24,7 +24,7 @@
               :lazy="true">
 
               <template v-slot:header>
-                <div class="snippet-name">{{snippet.name}}</div>
+                <div class="snippet-name font-weight-bold">{{snippet.name}}</div>
                 <div class="text-right">
                   <v-btn flat icon small color="grey darken-1"
                    @click.stop="deleteSnippet(i)">
@@ -37,6 +37,7 @@
                 <div class="row">
                   <div class="col">
                     <v-text-field label="Prefix"
+                      @change="saveSnippetsToLocalStorage"
                       v-model="snippet.prefix"
                       placeholder="m-snippet"
                       color="primary">
@@ -44,21 +45,24 @@
                   </div>
                   <div class="col">
                     <v-text-field label="Snippet Name"
+                      @change="saveSnippetsToLocalStorage"
                       v-model="snippet.name"
                       placeholder="My Snippet">
                     </v-text-field>
                   </div>
                   <div class="col">
                     <v-text-field label="Description"
+                      @change="saveSnippetsToLocalStorage"
                       v-model="snippet.description">
                     </v-text-field>
                   </div>
                 </div>
 
                 <div class="editor-wrapper">
-                  <codemirror v-model="snippet.code"
+                  <codemirror v-model="snippet.body"
                     v-if="visibleEditorIndex === i"
-                    :options="cmOptions">
+                    :options="cmOptions"
+                    @blur="saveSnippetsToLocalStorage">
                   </codemirror>
                 </div>
 
@@ -74,6 +78,7 @@
       </div>
       <div class="col col-6">
         <div class="h-100 bg-white">
+          <pre class="generated-code">{{generatedCode}}</pre>
         </div>
       </div>
     </div>
@@ -89,7 +94,6 @@ export default {
   name: 'app',
   data() {
     return {
-      code: 'const a = 10',
       panelIndex: 0,
       visibleEditorIndex: 0,
       cmOptions: {
@@ -103,25 +107,53 @@ export default {
         {
           prefix: '',
           name: 'My Snippet',
-          code: '',
           description: '',
+          body: '',
         }
       ]
     }
+  },
+  computed: {
+    generatedCode: function () {
+      const snippetsArray = this.snippets.map(snippet => {
+        const s = {...snippet}
+        s.body = s.body.split('\n');
+        return s
+      })
+
+      const snippetsObject = snippetsArray.reduce((accumulator, currentValue) => {
+        accumulator[currentValue.name] = currentValue
+        return accumulator
+      }, {})
+
+      return snippetsObject
+    }
+  },
+  created: function () {
+    const snippets = localStorage.getItem('sg.snippets')
+    if (!snippets) {
+      return
+    }
+
+    console.log(JSON.parse(snippets));
+    this.snippets = JSON.parse(snippets)
   },
   methods: {
     addNewSnippet: function() {
       this.snippets.push({
         prefix: '',
-        name: 'My Snippet',
-        code: '',
+        name: 'My Snippet ' + this.snippets.length,
         description: '',
+        body: '',
       })
       this.panelIndex = this.snippets.length - 1
     },
     deleteSnippet: function (i) {
       this.snippets.splice(i, 1)
       this.panelIndex--
+    },
+    saveSnippetsToLocalStorage: function () {
+      localStorage.setItem('sg.snippets', JSON.stringify(this.snippets))
     }
   },
   watch: {
@@ -169,5 +201,9 @@ body, html {
   font-size: 16px;
   border-radius: 5px;
   overflow: hidden;
+}
+
+.generated-code {
+  font-size: 16px;
 }
 </style>
