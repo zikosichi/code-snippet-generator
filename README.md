@@ -1,29 +1,12 @@
 # snippet-generator
+This is a very simple and handy tool to generate code snippets for VS Code
 
-## Project setup
-```
-yarn install
-```
+![Screenshot](screenshot.png)
 
-### Compiles and hot-reloads for development
-```
-yarn run serve
-```
 
-### Compiles and minifies for production
+## Project development
 ```
-yarn run build
+yarn
+yarn serve
+yarn build
 ```
-
-### Run your tests
-```
-yarn run test
-```
-
-### Lints and fixes files
-```
-yarn run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
