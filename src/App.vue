@@ -1,7 +1,7 @@
 <template>
   <div id="app">
 
-    <div class="h-100 bg-light row no-gutters">
+    <div class="h-100 row no-gutters">
       <div class="col col-6">
         <div class="px-5 py-3">
           <div class="mb-3 d-flex align-items-center">
@@ -78,7 +78,9 @@
       </div>
       <div class="col col-6">
         <div class="h-100 bg-white">
-          <pre class="generated-code">{{generatedCode}}</pre>
+          <div class="generated-code-wrapper">
+            <pre class="generated-code">{{generatedCode}}</pre>
+          </div>
         </div>
       </div>
     </div>
@@ -94,6 +96,7 @@ export default {
   name: 'app',
   data() {
     return {
+      code: 'const a = 10',
       panelIndex: 0,
       visibleEditorIndex: 0,
       cmOptions: {
@@ -135,7 +138,6 @@ export default {
       return
     }
 
-    console.log(JSON.parse(snippets));
     this.snippets = JSON.parse(snippets)
   },
   methods: {
@@ -203,7 +205,25 @@ body, html {
   overflow: hidden;
 }
 
+.generated-code-wrapper {
+  position: fixed;
+  height: 100%;
+  overflow: scroll;
+  background: #31374a;
+  padding: 15px;
+}
+
 .generated-code {
+  width: 100%;
   font-size: 16px;
+  background: transparent;
+  font-weight: normal;
+  color: rgba(aliceblue, .3);
+  box-shadow: none;
+  transition: color .2s;
+
+  &:hover {
+    color: aliceblue;
+  }
 }
 </style>
